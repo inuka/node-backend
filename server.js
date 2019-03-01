@@ -15,22 +15,15 @@ app.get('/', function(req, res) {
     database: dbConfig.dbName,
 
     options: {
-      encrypt: true // Use this if you're on Windows Azure
+      encrypt: true
     }
   };
 
-  // connect to your database
   sql.connect(config, function(err) {
     if (err) console.log(err);
-
-    // create Request object
     var request = new sql.Request();
-
-    // query to the database and get the records
-    request.query('select * from cc_app_flag_config', function(err, recordset) {
+    request.query('select FlagID, FlagName from cc_app_flag_config', function(err, recordset) {
       if (err) console.log(err);
-
-      // send records as a response
         res.send(recordset);
         sql.close();
     });
